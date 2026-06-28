@@ -62,16 +62,16 @@ jobs:
           name: pytest-results
           path: test-results.xml
 
-#   create-pr:
-#     name: Create PR to Main
-#     runs-on: ${{ inputs.runs-on }}
-#     needs:
-#       - ci-image
-#     steps:
-#       - uses: actions/checkout@v4
+  create-pr:
+    name: Create PR to Main
+    runs-on: ${{ inputs.runs-on }}
+    needs:
+      - ci-image
+    steps:
+      - uses: actions/checkout@v4
 
-#       - name: pull-request-action
-#         uses: vsoch/pull-request-action@master
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           PULL_REQUEST_BRANCH: "main"
+      - name: pull-request-action
+        uses: vsoch/pull-request-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST_BRANCH: "main"
