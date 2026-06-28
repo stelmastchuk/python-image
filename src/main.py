@@ -10,7 +10,6 @@ campeonatos = []
 def index():
     return render_template("index.html")
 
-
 @app.route('/times', methods=['GET', 'POST'])
 def handle_times():
     if request.method == 'GET':
