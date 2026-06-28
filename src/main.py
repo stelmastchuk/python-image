@@ -19,7 +19,6 @@ def handle_times():
         times.append(time)
         return jsonify({'message': 'Time adicionado com sucesso!'})
 
-
 @app.route('/campeonatos', methods=['GET', 'POST'])
 def handle_campeonatos():
     if request.method == 'GET':
