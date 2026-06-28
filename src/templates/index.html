@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bem-vindo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <div class="grain"></div>
+
+  <main class="stage">
+    <span class="eyebrow">flask • app rodando</span>
+
+    <h1 class="headline">
+      Olá,<br>
+      <span class="flicker">mundo</span>
+    </h1>
+
+    <p class="sub">
+      Seu servidor acordou e está respondendo na porta certa.
+      Tudo pronto pra construir algo daqui.
+    </p>
+
+    <div class="pulse-row">
+      <span class="dot"></span>
+      <code class="status">200 OK — / </code>
+    </div>
+  </main>
+
+  <footer class="foot">servido por <strong>static/</strong> &amp; <strong>templates/</strong></footer>
+
+</body>
+</html>

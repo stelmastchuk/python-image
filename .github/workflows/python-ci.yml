@@ -1,0 +1,77 @@
+name: 'Python CI'
+
+permissions:
+  id-token: write
+  contents: write
+  actions: write
+  pull-requests: write
+  packages: read
+
+on:
+  workflow_call:
+    inputs:
+      settings-file:
+        description: 'Path to the settings file'
+        required: false
+        type: string
+        default: 'settings.yml'
+      docker-file-path:
+        description: 'Path to the Dockerfile'
+        required: false
+        type: string
+        default: '.'
+      runs-on:
+        description: 'Runner label to use'
+        required: false
+        type: string
+        default: 'ubuntu-latest'
+
+jobs:
+  ci-image:
+    runs-on: ${{ inputs.runs-on }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run YAML to Github Output Action
+        id: settings-parser
+        uses: christian-ci/action-yaml-github-output@v2
+        with:
+          file_path: './${{ inputs.settings-file }}'      
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.13
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Linting
+        run: uv run pylint --errors-only src/*.py
+
+      - name: Pytest
+        run: uv run pytest src
+
+      - name: Upload pytest test results
+        uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: pytest-results
+          path: test-results.xml
+
+#   create-pr:
+#     name: Create PR to Main
+#     runs-on: ${{ inputs.runs-on }}
+#     needs:
+#       - ci-image
+#     steps:
+#       - uses: actions/checkout@v4
+
+#       - name: pull-request-action
+#         uses: vsoch/pull-request-action@master
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           PULL_REQUEST_BRANCH: "main"
